@@ -1,22 +1,14 @@
 const express = require("express");
 const helmet = require("helmet");
 // const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-const mysql = require("mysql");
+require("./config/database");
 
-dotenv.config();
-// DB connection
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-});
-
-connection.connect((err) => {
-    if (err) throw err;
-    console.log("Connected!");
-});
+try {
+    sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+} catch (error) {
+    console.error("Unable to connect to the database:", error);
+}
 
 //Import Routes
 // const userRoutes = require("./routes/user-router");
